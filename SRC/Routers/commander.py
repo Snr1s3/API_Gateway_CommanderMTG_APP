@@ -2,7 +2,7 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 
 import requests
-from SRC.Models.commander import Commander, CreateCommander, SelectAllCommander, UpdateCommander
+from SRC.Models.commander import *
 from SRC.Routers import settings
 
 router = APIRouter(
@@ -38,6 +38,22 @@ async def  all_commanders(
         if response.status_code == 200:
             commander_data = response.json()
             return [Commander(**c) for c in commander_data]
+        else:
+            raise HTTPException(status_code=response.status_code, detail=response.json().get("detail", response.text))
+    except HTTPException:
+        raise
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=f"{str(e)}")
+    
+@router.get("/{id}", response_model=Commander)
+async def  get_commanders(
+        id:int
+    ):
+    try:
+        response = requests.get(f'{url}{id}')
+        if response.status_code == 200:
+            commander_data = response.json()
+            return Commander(**commander_data)
         else:
             raise HTTPException(status_code=response.status_code, detail=response.json().get("detail", response.text))
     except HTTPException:
