@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from SRC.Routers import commander, partida
+from SRC.Routers import commander, partida, usuari_commander, usuaris
 
 app = FastAPI()
 
@@ -14,6 +14,8 @@ app.add_middleware(
 )
 app.include_router(commander.router)
 app.include_router(partida.router)
+app.include_router(usuari_commander.router)
+app.include_router(usuaris.router)
 
 @app.get("/", tags=["root"])
 async def root():

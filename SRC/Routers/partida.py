@@ -28,12 +28,15 @@ async def  all_partides(
                 options += f"&limit={partida.limit}"
         if partida.winner is not None:
             if options is None:
-                options = f"?partida={partida.winner}"
+                options = f"?winner={partida.winner}"
             else:
-                options += f"&partida={partida.winner}"
+                options += f"&winner={partida.winner}"
+        
         if options is None:
+            print(url)
             response = requests.get(f'{url}', json=partida.model_dump())
         else:
+            print(url+options)
             response = requests.get(f'{url}{options}', json=partida.model_dump())
         if response.status_code == 200:
             partida_data = response.json()
@@ -67,7 +70,7 @@ async def  create_new_partida(
         response = requests.post(f'{url}', json=partida.model_dump())
         if response.status_code == 200:
             partida_data = response.json()
-            return partida(**partida_data)
+            return Partida(**partida_data)
         else:
             raise HTTPException(status_code=response.status_code, detail=response.json().get("detail", response.text))
     except HTTPException:

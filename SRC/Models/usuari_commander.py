@@ -1,5 +1,6 @@
 from typing import Optional
 from pydantic import BaseModel, Field
+
 class UsuariCommander(BaseModel):
     id: int = Field(..., description="Unique identifier for the relationship")
     id_usuari: int = Field(..., description="Player ID")
@@ -18,7 +19,6 @@ class UpdateUsuariCommander(BaseModel):
     id_partida: Optional[int] = Field(None, description="Game ID")
     
 class SelectAllUsuariCommander(BaseModel):
-    
     pag: Optional[int] = Field(None,description="Offset")
     limit: Optional[int] = Field(None,description="Limit")
     id_usuari: Optional[int] = Field(None, description="Player ID")
