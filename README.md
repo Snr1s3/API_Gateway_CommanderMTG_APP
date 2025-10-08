@@ -3,8 +3,8 @@
 This API Gateway serves as the central entry point for the CommanderMTG application, routing requests to various microservices including user management, game data, and authentication services.
 
 **⚠️ Requirements:** 
-- Login Microservice running
-- CommanderMTG API Microservice running
+- [Login Microservice running](https://github.com/Snr1s3/Login_microservice)
+- [CommanderMTG API Microservice running](https://github.com/Snr1s3/CommanderMTGAPI.git)
 - Python 3.8+
 
 ## Architecture
