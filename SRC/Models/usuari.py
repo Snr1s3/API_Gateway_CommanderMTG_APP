@@ -24,5 +24,4 @@ class UpdateUsuariMail(BaseModel):
     mail: str = Field(..., description="Valid email address")
 
 class UpdateUsuariPassword(BaseModel):
-    
     hash: str = Field(..., description="Password hash (minimum 8 characters)")
