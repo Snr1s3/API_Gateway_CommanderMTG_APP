@@ -73,7 +73,6 @@ async def  authenticate(
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"{str(e)}")
 
-  
 @router.put("/{id}/name", response_model=Usuari)
 async def  update_usuari_name(
         id: int,

@@ -19,13 +19,8 @@ app.include_router(usuaris.router)
 
 @app.get("/", tags=["root"])
 async def root():
-    return {"message": "Commander MTG API"}
+    return {"message": "Commander MTG API Gateway"}
 
 @app.get("/health", tags=["health"])
 async def health_check():
     return {"status": "healthy"}
-
-
-@app.get("/", response_model=str)
-def root():
-    return "API Gateway"

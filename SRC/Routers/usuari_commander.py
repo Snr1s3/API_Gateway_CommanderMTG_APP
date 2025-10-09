@@ -57,7 +57,9 @@ async def  all_usuaris_commanders(
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"{str(e)}")
 
-@router.get("/name_count", response_model=List[UsuariCommanderNomCount])
+
+
+@router.get("/name_count/", response_model=List[UsuariCommanderNomCount])
 async def  all_usuaris_commanders_name_count(
         usuari_commander:SelectAllUsuariCommander=Depends(),
     ):
@@ -87,11 +89,10 @@ async def  all_usuaris_commanders_name_count(
                 options += f"&id_partida={usuari_commander.id_partida}"
         
         if options is None:
-            print(url)
-            response = requests.get(f'{url}all_usuaris_commanders_name_count', json=usuari_commander.model_dump())
+            response = requests.get(f'{url}name_count/', json=usuari_commander.model_dump())
         else:
             print(url+options)
-            response = requests.get(f'{url}all_usuaris_commanders_name_count/{options}', json=usuari_commander.model_dump())
+            response = requests.get(f'{url}name_count/{options}', json=usuari_commander.model_dump())
         if response.status_code == 200:
             usuari_commander_data = response.json()
             return [UsuariCommanderNomCount(**c) for c in usuari_commander_data]
@@ -101,7 +102,8 @@ async def  all_usuaris_commanders_name_count(
         raise
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"{str(e)}")
-     
+
+
 @router.get("/{id}", response_model=UsuariCommander)
 async def  usuari_commander_by_id(
         id: int
