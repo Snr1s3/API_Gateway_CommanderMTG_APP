@@ -58,7 +58,7 @@ async def  create_new_usuari(
         raise HTTPException(status_code=400, detail=f"{str(e)}")
 
 @router.post("/authenticate/", response_model=Usuari)
-async def  create_new_usuari(
+async def  authenticate(
         usuari: AuthRequest
     ):
     try:
@@ -75,7 +75,7 @@ async def  create_new_usuari(
 
   
 @router.put("/{id}/name", response_model=Usuari)
-async def  update_usuari_(
+async def  update_usuari_name(
         id: int,
         usuari_: UpdateUsuariName
     ):
@@ -93,7 +93,7 @@ async def  update_usuari_(
         raise HTTPException(status_code=400, detail=f"{str(e)}")
 
 @router.put("/{id}/mail", response_model=Usuari)
-async def  update_usuari_(
+async def  update_usuari_mail(
         id: int,
         usuari_: UpdateUsuariMail
     ):
@@ -111,7 +111,7 @@ async def  update_usuari_(
         raise HTTPException(status_code=400, detail=f"{str(e)}")
 
 @router.put("/{id}/password", response_model=Usuari)
-async def  update_usuari_(
+async def  update_usuari_password(
         id: int,
         usuari_: UpdateUsuariPassword
     ):

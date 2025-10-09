@@ -7,6 +7,10 @@ class UsuariCommander(BaseModel):
     id_commander: int = Field(..., description="Commander ID")
     id_partida: int = Field(..., description="Game ID")
 
+class UsuariCommanderNomCount(BaseModel):
+    id_commander: int = Field(..., description="Commander ID")
+    commander_name: str = Field(..., description="Commander Name")
+    appearance_count: int = Field(..., description="Count")
 
 class CreateUsuariCommander(BaseModel):
     id_usuari: int = Field(..., description="Player ID")
