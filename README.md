@@ -270,11 +270,6 @@ sudo docker run -d \
 sudo docker run -d \
   --name api-gateway-container \
   -p 8441:8441 \
-  -e DB_HOST=172.17.0.1 \
-  -e DB_PORT=5432 \
-  -e DB_USER=postgres \
-  -e DB_PASSWORD=your_password \
-  -e DB_NAME=proj \
   api-gateway
 ```
 
