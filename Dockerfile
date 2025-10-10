@@ -8,10 +8,15 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+
+# Simple fix: use trusted hosts
+RUN pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted-host files.pythonhosted.org --no-cache-dir -r requirements.txt
+
+
 
 COPY SRC/ ./SRC/
 
 EXPOSE 8441
 
+# Run the application
 CMD ["uvicorn", "SRC.main:app", "--host", "0.0.0.0", "--port", "8441"]
