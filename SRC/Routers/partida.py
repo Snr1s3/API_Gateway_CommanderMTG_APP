@@ -1,5 +1,5 @@
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Request
 
 import requests
 from SRC.Models.partida import *
@@ -14,30 +14,11 @@ url = settings.API_MTG_URL+"/partides/"
 
 
 @router.get("/", response_model=List[Partida])
-async def  all_partides(
-        partida:SelectAllPartida=Depends(),
-    ):
+async def  all_partides(request: Request):
     try:
-        options = None
-        if partida.pag is not None:
-            options = f"?pag={partida.pag}"
-        if partida.limit is not None:
-            if options is None:
-                options = f"?limit={partida.limit}"
-            else:
-                options += f"&limit={partida.limit}"
-        if partida.winner is not None:
-            if options is None:
-                options = f"?winner={partida.winner}"
-            else:
-                options += f"&winner={partida.winner}"
-        
-        if options is None:
-            print(url)
-            response = requests.get(f'{url}', json=partida.model_dump())
-        else:
-            print(url+options)
-            response = requests.get(f'{url}{options}', json=partida.model_dump())
+        query_string = str(request.url.query)
+        target_url = f"{url}?{query_string}" if query_string else url
+        response = requests.get(target_url)
         if response.status_code == 200:
             partida_data = response.json()
             return [Partida(**c) for c in partida_data]
@@ -48,9 +29,7 @@ async def  all_partides(
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"{str(e)}")
 @router.get("/{id}", response_model=Partida)
-async def  partida_by_id(
-        id: int
-    ):
+async def  partida_by_id(id: int):
     try:
         response = requests.get(f'{url}{id}')
         if response.status_code == 200:
@@ -63,9 +42,7 @@ async def  partida_by_id(
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"{str(e)}")
 @router.post("/", response_model=Partida)
-async def  create_new_partida(
-        partida: CreatePartida
-    ):
+async def  create_new_partida(partida: CreatePartida):
     try:
         response = requests.post(f'{url}', json=partida.model_dump())
         if response.status_code == 200:
@@ -79,10 +56,7 @@ async def  create_new_partida(
         raise HTTPException(status_code=400, detail=f"{str(e)}")
 
 @router.put("/{id}", response_model=Partida)
-async def  update_partida(
-        id: int,
-        partida: UpdatePartida
-    ):
+async def  update_partida(id: int, partida: UpdatePartida):
     try:
         response = requests.put(f'{url}{id}', json=partida.model_dump())
         if response.status_code == 200:
@@ -96,9 +70,7 @@ async def  update_partida(
         print(e)
         raise HTTPException(status_code=400, detail=f"{str(e)}")
 @router.delete("/{id}", response_model=dict)
-async def  delete_partida(
-        id: int
-    ):
+async def  delete_partida(id: int):
     try:
         response = requests.delete(f'{url}{id}')
         if response.status_code == 200:

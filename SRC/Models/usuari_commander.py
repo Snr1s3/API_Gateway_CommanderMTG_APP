@@ -11,7 +11,7 @@ class UsuariCommanderNomCount(BaseModel):
     id_commander: int = Field(..., description="Commander ID")
     commander_name: str = Field(..., description="Commander Name")
     appearance_count: int = Field(..., description="Count")
-
+    
 class CreateUsuariCommander(BaseModel):
     id_usuari: int = Field(..., description="Player ID")
     id_commander: int = Field(..., description="Commander ID")

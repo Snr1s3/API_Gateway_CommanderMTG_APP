@@ -14,7 +14,7 @@ url = settings.API_LOGIN_URL+"/usuaris/"
 
 
 @router.get("/", response_model=List[Usuari])
-async def  all_usuaris_s():
+async def  all_usuaris_select():
     try:
         response = requests.get(f'{url}')
         if response.status_code == 200:
@@ -27,14 +27,12 @@ async def  all_usuaris_s():
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"{str(e)}")
 @router.get("/{id}", response_model=Usuari)
-async def  usuari__by_id(
-        id: int
-    ):
+async def  usuari_by_id(id: int):
     try:
         response = requests.get(f'{url}{id}')
         if response.status_code == 200:
-            usuari__data = response.json()
-            return Usuari(**usuari__data)
+            usuari_data = response.json()
+            return Usuari(**usuari_data)
         else:
             raise HTTPException(status_code=response.status_code, detail=response.json().get("detail", response.text))
     except HTTPException:
@@ -42,9 +40,7 @@ async def  usuari__by_id(
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"{str(e)}")
 @router.post("/", response_model=Usuari)
-async def  create_new_usuari(
-        usuari: CreateUsuari
-    ):
+async def  create_new_usuari(usuari: CreateUsuari):
     try:
         response = requests.post(f'{url}', json=usuari.model_dump())
         if response.status_code == 200:
@@ -74,15 +70,12 @@ async def  authenticate(
         raise HTTPException(status_code=400, detail=f"{str(e)}")
 
 @router.put("/{id}/name", response_model=Usuari)
-async def  update_usuari_name(
-        id: int,
-        usuari_: UpdateUsuariName
-    ):
+async def  update_usuari_name(id: int,usuari: UpdateUsuariName):
     try:
-        response = requests.put(f'{url}{id}/name', json=usuari_.model_dump())
+        response = requests.put(f'{url}{id}/name', json=usuari.model_dump())
         if response.status_code == 200:
-            usuari__data = response.json()
-            return Usuari(**usuari__data)
+            usuari_data = response.json()
+            return Usuari(**usuari_data)
         else:
             raise HTTPException(status_code=response.status_code, detail=response.json().get("detail", response.text))
     except HTTPException:
@@ -92,15 +85,12 @@ async def  update_usuari_name(
         raise HTTPException(status_code=400, detail=f"{str(e)}")
 
 @router.put("/{id}/mail", response_model=Usuari)
-async def  update_usuari_mail(
-        id: int,
-        usuari_: UpdateUsuariMail
-    ):
+async def  update_usuari_mail(id: int,usuari: UpdateUsuariMail):
     try:
-        response = requests.put(f'{url}{id}/mail', json=usuari_.model_dump())
+        response = requests.put(f'{url}{id}/mail', json=usuari.model_dump())
         if response.status_code == 200:
-            usuari__data = response.json()
-            return Usuari(**usuari__data)
+            usuari_data = response.json()
+            return Usuari(**usuari_data)
         else:
             raise HTTPException(status_code=response.status_code, detail=response.json().get("detail", response.text))
     except HTTPException:
@@ -110,15 +100,12 @@ async def  update_usuari_mail(
         raise HTTPException(status_code=400, detail=f"{str(e)}")
 
 @router.put("/{id}/password", response_model=Usuari)
-async def  update_usuari_password(
-        id: int,
-        usuari_: UpdateUsuariPassword
-    ):
+async def  update_usuari_password(id: int,usuari: UpdateUsuariPassword):
     try:
-        response = requests.put(f'{url}{id}/password', json=usuari_.model_dump())
+        response = requests.put(f'{url}{id}/password', json=usuari.model_dump())
         if response.status_code == 200:
-            usuari__data = response.json()
-            return Usuari(**usuari__data)
+            usuari_data = response.json()
+            return Usuari(**usuari_data)
         else:
             raise HTTPException(status_code=response.status_code, detail=response.json().get("detail", response.text))
     except HTTPException:
@@ -127,15 +114,8 @@ async def  update_usuari_password(
         print(e)
         raise HTTPException(status_code=400, detail=f"{str(e)}")
 
-
-
-
-
-
 @router.delete("/{id}", response_model=dict)
-async def  delete_usuari(
-        id: int
-    ):
+async def  delete_usuari(id: int):
     try:
         response = requests.delete(f'{url}{id}')
         if response.status_code == 200:
