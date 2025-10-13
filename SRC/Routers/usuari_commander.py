@@ -51,9 +51,7 @@ async def  all_usuaris_commanders_name_count(request: Request):
 
 
 @router.get("/{id}", response_model=UsuariCommander)
-async def  usuari_commander_by_id(
-        id: int
-    ):
+async def  usuari_commander_by_id(id: int):
     try:
         response = requests.get(f'{url}{id}')
         if response.status_code == 200:
@@ -67,9 +65,7 @@ async def  usuari_commander_by_id(
         raise HTTPException(status_code=400, detail=f"{str(e)}")
     
 @router.post("/", response_model=UsuariCommander)
-async def  create_new_usuari_commander(
-        usuari_commander: CreateUsuariCommander
-    ):
+async def  create_new_usuari_commander(usuari_commander: CreateUsuariCommander):
     try:
         response = requests.post(f'{url}', json=usuari_commander.model_dump())
         if response.status_code == 200:
@@ -83,10 +79,7 @@ async def  create_new_usuari_commander(
         raise HTTPException(status_code=400, detail=f"{str(e)}")
     
 @router.put("/{id}", response_model=UsuariCommander)
-async def  update_usuari_commander(
-        id: int,
-        usuari_commander: UpdateUsuariCommander
-    ):
+async def  update_usuari_commander(id: int,usuari_commander: UpdateUsuariCommander):
     try:
         response = requests.put(f'{url}{id}', json=usuari_commander.model_dump())
         if response.status_code == 200:
@@ -101,9 +94,7 @@ async def  update_usuari_commander(
         raise HTTPException(status_code=400, detail=f"{str(e)}")
 
 @router.delete("/{id}", response_model=dict)
-async def  delete_usuari_commander(
-        id: int
-    ):
+async def  delete_usuari_commander(id: int):
     try:
         response = requests.delete(f'{url}{id}')
         if response.status_code == 200:
