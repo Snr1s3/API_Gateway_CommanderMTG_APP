@@ -1,9 +1,8 @@
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException, Request
-
+from fastapi import APIRouter, HTTPException, Request
 import requests
-from SRC.Models.commander import *
-from SRC.Routers import settings
+from Models.commander import *
+from Routers import settings
 
 router = APIRouter(
     prefix="/commanders",
@@ -11,7 +10,7 @@ router = APIRouter(
     responses={404: {"description": "Not found"}}
 )
 url = settings.API_MTG_URL+"/commanders/"
-    
+
 @router.get("/", response_model=List[Commander])
 async def all_commanders(request: Request):
     try:
@@ -28,6 +27,7 @@ async def all_commanders(request: Request):
         raise
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"{str(e)}")
+
 @router.get("/{id}", response_model=Commander)
 async def  get_commanders(id: int):
     try:
@@ -41,7 +41,7 @@ async def  get_commanders(id: int):
         raise
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"{str(e)}")
-    
+
 @router.post("/", response_model=Commander)
 async def  create_new_commander(commander: CreateCommander):
     try:
@@ -70,6 +70,7 @@ async def update_commander(id: int,commander: UpdateCommander):
     except Exception as e:
         print(e)
         raise HTTPException(status_code=400, detail=f"{str(e)}")
+
 @router.delete("/{id}", response_model=dict)
 async def  delete_commander(id: int):
     try:

@@ -1,9 +1,9 @@
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Request
 
 import requests
-from SRC.Models.partida import *
-from SRC.Routers import settings
+from Models.partida import *
+from Routers import settings
 
 router = APIRouter(
     prefix="/partides",
@@ -11,7 +11,6 @@ router = APIRouter(
     responses={404: {"description": "Not found"}}
 )
 url = settings.API_MTG_URL+"/partides/"
-
 
 @router.get("/", response_model=List[Partida])
 async def  all_partides(request: Request):
@@ -28,6 +27,7 @@ async def  all_partides(request: Request):
         raise
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"{str(e)}")
+
 @router.get("/{id}", response_model=Partida)
 async def  partida_by_id(id: int):
     try:
@@ -41,6 +41,7 @@ async def  partida_by_id(id: int):
         raise
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"{str(e)}")
+
 @router.post("/", response_model=Partida)
 async def  create_new_partida(partida: CreatePartida):
     try:
@@ -67,8 +68,8 @@ async def  update_partida(id: int, partida: UpdatePartida):
     except HTTPException:
         raise
     except Exception as e:
-        print(e)
         raise HTTPException(status_code=400, detail=f"{str(e)}")
+
 @router.delete("/{id}", response_model=dict)
 async def  delete_partida(id: int):
     try:

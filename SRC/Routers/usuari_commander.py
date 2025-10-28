@@ -1,9 +1,8 @@
 from typing import List
-from fastapi import APIRouter, Depends, HTTPException, Request
-
+from fastapi import APIRouter,HTTPException, Request
 import requests
-from SRC.Models.usuari_commander import *
-from SRC.Routers import settings
+from Models.usuari_commander import *
+from Routers import settings
 
 router = APIRouter(
     prefix="/usuaris_commanders",
@@ -29,8 +28,6 @@ async def  all_usuaris_commanders(request: Request):
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"{str(e)}")
 
-
-
 @router.get("/name_count/", response_model=List[UsuariCommanderNomCount])
 async def  all_usuaris_commanders_name_count(request: Request):
     try:
@@ -49,7 +46,6 @@ async def  all_usuaris_commanders_name_count(request: Request):
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error: {str(e)}")
 
-
 @router.get("/{id}", response_model=UsuariCommander)
 async def  usuari_commander_by_id(id: int):
     try:
@@ -63,7 +59,7 @@ async def  usuari_commander_by_id(id: int):
         raise
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"{str(e)}")
-    
+
 @router.post("/", response_model=UsuariCommander)
 async def  create_new_usuari_commander(usuari_commander: CreateUsuariCommander):
     try:
@@ -77,7 +73,7 @@ async def  create_new_usuari_commander(usuari_commander: CreateUsuariCommander):
         raise
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"{str(e)}")
-    
+
 @router.put("/{id}", response_model=UsuariCommander)
 async def  update_usuari_commander(id: int,usuari_commander: UpdateUsuariCommander):
     try:

@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from SRC.Routers import commander, partida, usuari_commander, usuaris
+from Routers import commander, partida, usuari_commander, usuaris
 
 app = FastAPI()
 
