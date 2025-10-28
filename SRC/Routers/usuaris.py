@@ -2,7 +2,7 @@ from typing import List
 from fastapi import APIRouter, HTTPException, Request
 
 import requests
-from Models.usuari import UsuariLogin
+from Models.usuari import AuthRequest, CreateUsuariLogin, UpdateUsuari, UpdateUsuariMail, UpdateUsuariName, UpdateUsuariPassword, Usuari, UsuariLogin
 from Routers import settings
 
 router = APIRouter(
