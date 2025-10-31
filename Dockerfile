@@ -16,7 +16,9 @@ RUN pip install --trusted-host pypi.org --trusted-host pypi.python.org --trusted
 
 COPY SRC/ ./SRC/
 
+WORKDIR /app/SRC
+
 EXPOSE 8441
 
 # Run the application
-CMD ["uvicorn", "SRC.main:app", "--host", "0.0.0.0", "--port", "8441"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8441"]

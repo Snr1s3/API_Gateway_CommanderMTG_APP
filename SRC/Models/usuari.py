@@ -30,8 +30,8 @@ class Usuari(BaseModel):
     id: int = Field(..., description="Unique identifier for the user")
     name: str = Field(..., description="User's display name")
     mail: str = Field(..., description="User's email address")
-    moxfield: str = Field(..., description="Moxfield link")
-    archideckt: str = Field(..., description="Archideckt link")
+    moxfield: Optional[str] = Field(None, description="Moxfield link")
+    archideckt: Optional[str] = Field(None, description="Archideckt link")
 
 class UpdateUsuari(BaseModel):
     name: Optional[str] = Field(None, description="User's display name (3-50 characters)")
